@@ -3,13 +3,7 @@ import {ConfigModule} from '@nestjs/config';
 import {resolve} from 'path';
 import {envValidate} from './validate/env.validation';
 import serverConfig from './config/server.config';
-import postgresConfig from './config/postgres.config';
-import redisConfig from './config/redis.config';
-import htpasswdConfig from './config/htpasswd.config';
-import dockerConfig from './config/docker.config';
-import mystConfig from './config/myst.config';
-import proxyConfig from './config/proxy.config';
-import usersConfig from './config/users.config';
+import jwtConfig from './config/jwt.config';
 
 @Module({
   imports: [
@@ -19,13 +13,7 @@ import usersConfig from './config/users.config';
       validate: envValidate,
       load: [
         serverConfig,
-        postgresConfig,
-        redisConfig,
-        htpasswdConfig,
-        dockerConfig,
-        mystConfig,
-        proxyConfig,
-        usersConfig
+        jwtConfig,
       ],
     }),
   ],
