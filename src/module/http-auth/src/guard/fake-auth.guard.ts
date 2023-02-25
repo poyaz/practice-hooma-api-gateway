@@ -9,14 +9,12 @@ import {Reflector} from '@nestjs/core';
 
 @Injectable()
 export class FakeAuthGuard implements CanActivate {
-  constructor(private reflector: Reflector) {
+  constructor() {
   }
 
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    context.switchToHttp().getResponse().setHeader('X-Auth-Guard', 'fake');
-
     const request = context.switchToHttp().getRequest();
 
     const userId = request.headers['x-fake-user-id'];
@@ -28,11 +26,6 @@ export class FakeAuthGuard implements CanActivate {
         role,
       };
 
-      return true;
-    }
-
-    const disableCheckAuth = this.reflector.get<string[]>('disableCheckAuth', context.getHandler());
-    if (disableCheckAuth) {
       return true;
     }
 
