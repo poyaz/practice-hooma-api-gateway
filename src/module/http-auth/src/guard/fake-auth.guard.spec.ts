@@ -18,7 +18,7 @@ describe('FakeAuthGuard', () => {
       ],
     }).compile();
 
-    fakeAuthGuard = module.get<FakeAuthGuard>(FakeAuthGuard);
+    fakeAuthGuard = module.get(FakeAuthGuard);
   });
 
   afterEach(() => {
