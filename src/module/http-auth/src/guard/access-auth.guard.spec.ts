@@ -26,7 +26,7 @@ describe('AccessAuthGuard', () => {
       ],
     }).compile();
 
-    accessAuthGuard = module.get(AccessAuthGuard);
+    accessAuthGuard = module.get<AccessAuthGuard>(AccessAuthGuard);
   });
 
   afterEach(() => {
