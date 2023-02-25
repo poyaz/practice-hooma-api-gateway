@@ -32,6 +32,10 @@ export class EnvConfigDto {
   @IsOptional()
   @IsString()
   JWT_EXPIRE_TIME?: string;
+
+  @IsDefined()
+  @IsString()
+  GRPC_AUTH_MS_URL: string;
 }
 
 
