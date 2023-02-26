@@ -22,5 +22,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 10.111.0.0/28
+        - subnet: 10.111.0.0/29
           gateway: 10.111.0.1
