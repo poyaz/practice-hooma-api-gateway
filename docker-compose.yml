@@ -12,8 +12,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
-      main:
-        ipv4_address: 10.111.0.2
+      main: {}
     restart: "always"
 
 networks:
