@@ -10,6 +10,7 @@ import authMsConfig from '@src-loader/configure/config/auth-ms.config';
   imports: [
     ConfigModule.forRoot({
       cache: true,
+      isGlobal: true,
       envFilePath: resolve('env', 'app', '.env'),
       validate: envValidate,
       load: [
