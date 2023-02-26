@@ -12,7 +12,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
-      main: {}
+      main: { }
     restart: "always"
 
 networks:
