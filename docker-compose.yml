@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/images/gateway/Dockerfile
-    image: practice-hooma:latest
+    image: practice-hooma-gateway:latest
     expose:
       - 3000
     ports:
