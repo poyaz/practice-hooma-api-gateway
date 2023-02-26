@@ -6,7 +6,7 @@ import {HttpAuthModule} from '@src-module/http-auth/http-auth.module';
 import {AuthGrpcModule} from './module/auth-grpc/auth-grpc.module';
 import {DefaultController} from '@src-api/http/controller/default-controller';
 import {APP_INTERCEPTOR} from '@nestjs/core';
-import {OutputTransferInterceptor} from '@src-api/http/interceptor/output.transfer.interceptor';
+import {GrpcTransferInterceptor} from '@src-api/http/interceptor/grpc.transfer.interceptor';
 
 @Module({
   imports: [
@@ -15,7 +15,7 @@ import {OutputTransferInterceptor} from '@src-api/http/interceptor/output.transf
       pinoHttp: {
         autoLogging: false,
         genReqId: () => null,
-        quietReqLogger: true,
+        quietReqLogger: false,
         transport: {target: 'pino-pretty'},
       },
     }),
@@ -29,7 +29,7 @@ import {OutputTransferInterceptor} from '@src-api/http/interceptor/output.transf
 
     {
       provide: APP_INTERCEPTOR,
-      useClass: OutputTransferInterceptor,
+      useClass: GrpcTransferInterceptor,
     },
   ],
 })
