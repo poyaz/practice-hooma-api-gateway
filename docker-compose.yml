@@ -1,27 +1,14 @@
-version: "2.3"
+version: "3.3"
 services:
   gateway:
     build:
-      context: .
-      dockerfile: ./docker/images/gateway/Dockerfile
-    image: practice-hooma:latest
+      context: "${HOOMA_API_GATEWAY_BASE_PATH:-$PWD}"
+      dockerfile: "./docker/images/gateway/Dockerfile"
+    image: practice-hooma-gateway:latest
     expose:
       - 3000
     ports:
       - "80:3000"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-    networks:
-      main:
-        ipv4_address: 10.111.0.2
     restart: "always"
-
-networks:
-  main:
-    name: main
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.111.0.0/28
-          gateway: 10.111.0.1

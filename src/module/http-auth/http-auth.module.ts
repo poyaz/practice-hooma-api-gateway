@@ -31,7 +31,7 @@ import {AccessAuthGuard} from '@src-module/http-auth/src/guard/access-auth.guard
         return new AccessAuthGuard(reflector);
       },
     },
-  ]
+  ],
 })
 export class HttpAuthModule {
 }

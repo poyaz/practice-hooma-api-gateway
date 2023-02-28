@@ -17,7 +17,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "proto:auth": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/proto-auth --ts_proto_out=./src/module/auth-grpc/src/controller node_modules/proto-auth/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:all": "npm run proto:auth"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.8.10",
@@ -29,6 +31,7 @@
     "@nestjs/microservices": "^9.3.9",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.2.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "nestjs-pino": "^3.1.2",
@@ -36,7 +39,8 @@
     "passport-jwt": "^4.0.1",
     "pino-pretty": "^9.3.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "proto-auth": "git+https://github.com/poyaz/practice-hooma-proto-auth.git"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",

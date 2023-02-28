@@ -29,7 +29,7 @@ describe('RolesGuard', () => {
       ],
     }).compile();
 
-    rolesGuard = module.get(RolesGuard);
+    rolesGuard = module.get<RolesGuard>(RolesGuard);
   });
 
   afterEach(() => {
