@@ -15,7 +15,7 @@ export class LoginInputDto {
   @ApiProperty({
     description: 'The password of user for login and use on proxy',
     type: String,
-    minLength: 6,
+    minLength: 5,
     maxLength: 50,
     required: true,
     example: 'my password',

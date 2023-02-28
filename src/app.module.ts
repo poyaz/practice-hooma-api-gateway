@@ -13,7 +13,7 @@ import {GrpcTransferInterceptor} from '@src-api/http/interceptor/grpc.transfer.i
     ConfigureModule,
     LoggerModule.forRoot({
       pinoHttp: {
-        autoLogging: false,
+        autoLogging: true,
         genReqId: () => null,
         quietReqLogger: false,
         transport: {target: 'pino-pretty'},
