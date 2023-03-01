@@ -5,6 +5,7 @@ import {envValidate} from './validate/env.validation';
 import serverConfig from './config/server.config';
 import jwtConfig from './config/jwt.config';
 import authMsConfig from '@src-loader/configure/config/auth-ms.config';
+import usersMsConfig from '@src-loader/configure/config/users-ms.config';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import authMsConfig from '@src-loader/configure/config/auth-ms.config';
         serverConfig,
         jwtConfig,
         authMsConfig,
+        usersMsConfig,
       ],
     }),
   ],

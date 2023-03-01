@@ -7,6 +7,7 @@ import {AuthGrpcModule} from './module/auth-grpc/auth-grpc.module';
 import {DefaultController} from '@src-api/http/controller/default-controller';
 import {APP_INTERCEPTOR} from '@nestjs/core';
 import {GrpcTransferInterceptor} from '@src-api/http/interceptor/grpc.transfer.interceptor';
+import {UsersGrpcModule} from '@src-module/users-grpc/users-grpc.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import {GrpcTransferInterceptor} from '@src-api/http/interceptor/grpc.transfer.i
     }),
     HttpAuthModule,
     AuthGrpcModule,
+    UsersGrpcModule,
   ],
   controllers: [DefaultController],
   providers: [
