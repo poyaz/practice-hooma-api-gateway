@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  gateway:
+    build:
+      context: "${HOOMA_API_GATEWAY_BASE_PATH:-$PWD/practice-hooma-api-gateway}"
+    environment:
+      - JWT_PUBLIC_KEY_FILE=/run/secrets/jwt_public_key
+      - GRPC_AUTH_MS_URL=auth:3000
+      - GRPC_USERS_MS_URL=users:3000
+    secrets:
+      - jwt_public_key
+    networks:
+      main: { }
