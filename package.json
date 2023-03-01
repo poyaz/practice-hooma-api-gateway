@@ -19,7 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "proto:auth": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/proto-auth --ts_proto_out=./src/module/auth-grpc/src/controller node_modules/proto-auth/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto:all": "npm run proto:auth"
+    "proto:users": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/proto-users --ts_proto_out=./src/module/users-grpc/src/controller node_modules/proto-users/users.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:all": "npm run proto:auth && npm run proto:users"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.8.10",
@@ -40,7 +41,8 @@
     "pino-pretty": "^9.3.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
-    "proto-auth": "git+https://github.com/poyaz/practice-hooma-proto-auth.git"
+    "proto-auth": "git+https://github.com/poyaz/practice-hooma-proto-auth.git",
+    "proto-users": "git+https://github.com/poyaz/practice-hooma-proto-users.git"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",

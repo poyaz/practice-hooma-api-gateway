@@ -40,7 +40,7 @@ export class AuthGrpcController implements OnModuleInit {
   @ApiOperation({description: 'Login user exist in system', operationId: 'Login user'})
   @ApiBody({type: LoginInputDto})
   @ApiOkResponse({
-    description: 'The user has been successfully login.',
+    description: 'The user has been login successfully.',
     schema: {
       allOf: [
         {$ref: getSchemaPath(DefaultSuccessDto)},

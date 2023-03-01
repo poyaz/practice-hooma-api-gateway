@@ -36,6 +36,10 @@ export class EnvConfigDto {
   @IsDefined()
   @IsString()
   GRPC_AUTH_MS_URL: string;
+
+  @IsDefined()
+  @IsString()
+  GRPC_USERS_MS_URL: string;
 }
 
 
