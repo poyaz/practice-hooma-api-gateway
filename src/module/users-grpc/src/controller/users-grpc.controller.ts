@@ -1,4 +1,17 @@
-import {Body, Controller, Delete, Get, HttpCode, Inject, OnModuleInit, Param, Post, Put, Headers} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Inject,
+  OnModuleInit,
+  Param,
+  Post,
+  Put,
+  Headers,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -28,11 +41,19 @@ import {FindOneOutputDto} from '@src-module/users-grpc/src/controller/dto/find-o
 import {CreateInputDto} from '@src-module/users-grpc/src/controller/dto/create-input.dto';
 import {NotFoundExceptionSchema} from '@src-api/http/dto/schema/not-found-exception.schema';
 import {Metadata} from '@grpc/grpc-js';
+import {AuthRoles} from '@src-api/http/decorator/auth-roles.decorator';
+import {UsersRoleEnum} from '@src-module/users-grpc/src/controller/enum/users-role.enum';
+import {RolesGuard} from '@src-module/http-auth/src/guard/roles.guard';
+import {OwnUserAccessGuard} from '@src-module/users-grpc/src/guard/own-user-access.guard';
+import {UserOwnAccess} from '@src-module/users-grpc/src/decorator/user-own-access.decorator';
+import {PropertyAccessGuard} from '@src-module/users-grpc/src/guard/property-access.guard';
+import {PropertyAccess} from '@src-module/users-grpc/src/decorator/property-access.decorator';
 
 @Controller({
   path: 'users',
   version: '1',
 })
+@UseGuards(RolesGuard, OwnUserAccessGuard, PropertyAccessGuard)
 @ApiTags('users')
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({
@@ -60,6 +81,7 @@ export class UsersGrpcController implements OnModuleInit {
   }
 
   @Get('/')
+  @AuthRoles(UsersRoleEnum.ADMIN)
   @ApiOperation({description: 'Get list of users', operationId: 'Get all users'})
   @ApiOkResponse({
     schema: {
@@ -117,6 +139,8 @@ export class UsersGrpcController implements OnModuleInit {
   }
 
   @Get('/:userId')
+  @UserOwnAccess()
+  @AuthRoles(UsersRoleEnum.ADMIN, UsersRoleEnum.USER)
   @ApiOperation({description: 'Get info of one user with ID', operationId: 'Get user'})
   @ApiParam({name: 'userId', type: String, example: '00000000-0000-0000-0000-000000000000'})
   @ApiOkResponse({
@@ -143,6 +167,7 @@ export class UsersGrpcController implements OnModuleInit {
   }
 
   @Post('/')
+  @AuthRoles(UsersRoleEnum.ADMIN)
   @ApiOperation({description: 'Create new user in system', operationId: 'Create user'})
   @ApiBody({type: CreateInputDto})
   @ApiOkResponse({
@@ -169,6 +194,9 @@ export class UsersGrpcController implements OnModuleInit {
   }
 
   @Put('/:userId')
+  @AuthRoles(UsersRoleEnum.ADMIN, UsersRoleEnum.USER)
+  @PropertyAccess((<keyof UpdateRequest>'role'))
+  @UserOwnAccess()
   @ApiOperation({description: 'Update exist user', operationId: 'Update user'})
   @ApiParam({name: 'userId', type: String, example: '00000000-0000-0000-0000-000000000000'})
   @ApiBody({type: CreateInputDto})
@@ -199,6 +227,8 @@ export class UsersGrpcController implements OnModuleInit {
   }
 
   @Delete('/:userId')
+  @AuthRoles(UsersRoleEnum.ADMIN, UsersRoleEnum.USER)
+  @UserOwnAccess()
   @HttpCode(204)
   @ApiOperation({description: 'Delete exist user', operationId: 'Delete user'})
   @ApiParam({name: 'userId', type: String, example: '00000000-0000-0000-0000-000000000000'})
