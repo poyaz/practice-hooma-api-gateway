@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, HttpCode, Inject, OnModuleInit, Param, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Inject, OnModuleInit, Param, Post, Put, Headers} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -14,7 +14,6 @@ import {
 import {DefaultSuccessDto} from '@src-api/http/dto/default-success.dto';
 import {UnauthorizedExceptionSchema} from '@src-api/http/dto/schema/unauthorized-exception.schema';
 import {ValidateExceptionDto} from '@src-api/http/dto/validate-exception.dto';
-import {ExcludeAuth} from '@src-api/http/decorator/exclude-auth.decorator';
 import {ClientGrpc} from '@nestjs/microservices';
 import {
   CreateRequest,
@@ -26,9 +25,9 @@ import {ForbiddenExceptionSchema} from '@src-api/http/dto/schema/forbidden-excep
 import {DefaultExceptionDto} from '@src-api/http/dto/default-exception.dto';
 import {DefaultArraySuccessDto} from '@src-api/http/dto/default-array-success.dto';
 import {FindOneOutputDto} from '@src-module/users-grpc/src/controller/dto/find-one-output.dto';
-import {LoginInputDto} from '@src-module/auth-grpc/src/controller/dto/login-input.dto';
 import {CreateInputDto} from '@src-module/users-grpc/src/controller/dto/create-input.dto';
 import {NotFoundExceptionSchema} from '@src-api/http/dto/schema/not-found-exception.schema';
+import {Metadata} from '@grpc/grpc-js';
 
 @Controller({
   path: 'users',
@@ -110,8 +109,11 @@ export class UsersGrpcController implements OnModuleInit {
       ],
     },
   })
-  async findAll() {
-    return this._svc.findAll({username: '', role: '', name: ''});
+  async findAll(@Headers('Authorization') authHeader: string) {
+    const metadata = new Metadata();
+    metadata.add('Authorization', authHeader);
+
+    return this._svc.findAll({username: '', role: '', name: ''}, metadata);
   }
 
   @Get('/:userId')
@@ -133,8 +135,11 @@ export class UsersGrpcController implements OnModuleInit {
     },
   })
   @ApiNotFoundResponse({description: 'The user id not found.', schema: NotFoundExceptionSchema})
-  async findOne(@Param('userId') userId: string) {
-    return this._svc.findOne({userId});
+  async findOne(@Param('userId') userId: string, @Headers('Authorization') authHeader: string) {
+    const metadata = new Metadata();
+    metadata.add('Authorization', authHeader);
+
+    return this._svc.findOne({userId}, metadata);
   }
 
   @Post('/')
@@ -156,8 +161,11 @@ export class UsersGrpcController implements OnModuleInit {
       ],
     },
   })
-  async create(@Body() createDto: CreateRequest) {
-    return this._svc.create(createDto);
+  async create(@Body() createDto: CreateRequest, @Headers('Authorization') authHeader: string) {
+    const metadata = new Metadata();
+    metadata.add('Authorization', authHeader);
+
+    return this._svc.create(createDto, metadata);
   }
 
   @Put('/:userId')
@@ -181,10 +189,13 @@ export class UsersGrpcController implements OnModuleInit {
     },
   })
   @ApiNotFoundResponse({description: 'The user id not found.', schema: NotFoundExceptionSchema})
-  async update(@Param('userId') userId: string, @Body() updateDto: UpdateRequest) {
+  async update(@Param('userId') userId: string, @Body() updateDto: UpdateRequest, @Headers('Authorization') authHeader: string) {
+    const metadata = new Metadata();
+    metadata.add('Authorization', authHeader);
+
     updateDto.userId = userId;
 
-    return this._svc.update(updateDto);
+    return this._svc.update(updateDto, metadata);
   }
 
   @Delete('/:userId')
@@ -193,7 +204,10 @@ export class UsersGrpcController implements OnModuleInit {
   @ApiParam({name: 'userId', type: String, example: '00000000-0000-0000-0000-000000000000'})
   @ApiNoContentResponse({description: 'The user has been delete successfully.'})
   @ApiNotFoundResponse({description: 'The user id not found.', schema: NotFoundExceptionSchema})
-  async delete(@Param('userId') userId: string) {
-    return this._svc.delete({userId});
+  async delete(@Param('userId') userId: string, @Headers('Authorization') authHeader: string) {
+    const metadata = new Metadata();
+    metadata.add('Authorization', authHeader);
+
+    return this._svc.delete({userId}, metadata);
   }
 }

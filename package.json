@@ -19,7 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "proto:auth": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/proto-auth --ts_proto_out=./src/module/auth-grpc/src/controller node_modules/proto-auth/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto:users": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/proto-users --ts_proto_out=./src/module/users-grpc/src/controller node_modules/proto-users/users.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:users": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/proto-users --ts_proto_out=./src/module/users-grpc/src/controller node_modules/proto-users/users.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --ts_proto_opt=addGrpcMetadata=true",
     "proto:all": "npm run proto:auth && npm run proto:users"
   },
   "dependencies": {

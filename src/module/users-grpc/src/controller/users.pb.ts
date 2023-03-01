@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { Metadata } from "@grpc/grpc-js";
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
@@ -56,30 +57,41 @@ export interface UpdateAndDeleteResponse {
 export const USERS_PACKAGE_NAME = "users";
 
 export interface UsersServiceClient {
-  findAll(request: FindAllRequest): Observable<FindAllResponse>;
+  findAll(request: FindAllRequest, metadata?: Metadata): Observable<FindAllResponse>;
 
-  findOne(request: FindOneRequest): Observable<FindOneResponse>;
+  findOne(request: FindOneRequest, metadata?: Metadata): Observable<FindOneResponse>;
 
-  create(request: CreateRequest): Observable<FindOneResponse>;
+  create(request: CreateRequest, metadata?: Metadata): Observable<FindOneResponse>;
 
-  update(request: UpdateRequest): Observable<UpdateAndDeleteResponse>;
+  update(request: UpdateRequest, metadata?: Metadata): Observable<UpdateAndDeleteResponse>;
 
-  delete(request: DeleteRequest): Observable<UpdateAndDeleteResponse>;
+  delete(request: DeleteRequest, metadata?: Metadata): Observable<UpdateAndDeleteResponse>;
 }
 
 export interface UsersServiceController {
-  findAll(request: FindAllRequest): Promise<FindAllResponse> | Observable<FindAllResponse> | FindAllResponse;
+  findAll(
+    request: FindAllRequest,
+    metadata?: Metadata,
+  ): Promise<FindAllResponse> | Observable<FindAllResponse> | FindAllResponse;
 
-  findOne(request: FindOneRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
+  findOne(
+    request: FindOneRequest,
+    metadata?: Metadata,
+  ): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
 
-  create(request: CreateRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
+  create(
+    request: CreateRequest,
+    metadata?: Metadata,
+  ): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
 
   update(
     request: UpdateRequest,
+    metadata?: Metadata,
   ): Promise<UpdateAndDeleteResponse> | Observable<UpdateAndDeleteResponse> | UpdateAndDeleteResponse;
 
   delete(
     request: DeleteRequest,
+    metadata?: Metadata,
   ): Promise<UpdateAndDeleteResponse> | Observable<UpdateAndDeleteResponse> | UpdateAndDeleteResponse;
 }
 
